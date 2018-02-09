@@ -1,0 +1,25 @@
+{
+  "name": "seatcc",
+  "version": "0.0.1",
+  "description": "Selenium Auto Test Code Core",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webbestmaster/seatcc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webbestmaster/seatcc/issues"
+  },
+  "homepage": "https://github.com/webbestmaster/seatcc#readme",
+  "dependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.17.0"
+  }
+}
