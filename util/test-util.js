@@ -35,6 +35,7 @@ function getJvmArgs() {
 
     switch (browserName) {
         case 'android':
+            return null;
         case 'chrome':
             return ['-Dwebdriver.chrome.driver=./driver/' + osName + '/chromedriver'];
         case 'ff':

@@ -8,7 +8,7 @@ echo "Unbind all devices"
 
 #deviceIds=(emulator-5558 emulator-5556)
 #deviceIds=(A3P4376F48D9)
-deviceIds=(0123456789ABCDEF)
+deviceIds=(emulator-5554)
 startPortNumber=8000
 
 for deviceId in "${deviceIds[@]}";
@@ -33,5 +33,5 @@ do
     echo "Run app"
     ( exec "${pathToAdb}" -s "${deviceId}" shell am start -a android.intent.action.MAIN -n org.openqa.selenium.android.app/.MainActivity)
 
-    __run-single.sh $deviceId $serverPort # &
+    ./run-mobile-test.sh $deviceId $serverPort # &
 done

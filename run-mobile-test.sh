@@ -11,11 +11,10 @@ if [ -z "${serverPort}" ] ; then
 fi
 
 now="$(date +'%Y-%m-%d-%H-%M-%S')"
-reportsFolder=./se-test/reports
+reportsFolder=./reports
 reportName=auto-test-$now-$deviceId
 
-# SEE se-test.sh
-SE_SERVER_PORT=$serverPort mocha ./se-test/*.test.js --reporter mochawesome --reporter-options reportDir=$reportsFolder/auto-test-$now,reportFilename=$reportName,reportTitle="Auto Test $now",inlineAssets=false
+SE_SERVER_PORT=$serverPort mocha ./test/*.test.js --reporter mochawesome --reporter-options reportDir=$reportsFolder/auto-test-$now,reportFilename=$reportName,reportTitle="Auto Test $now",inlineAssets=false
 
 #unamestr=`uname`
 #reportPath="$reportsFolder/$reportName.html"

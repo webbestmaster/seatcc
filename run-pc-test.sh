@@ -2,8 +2,6 @@
 
 clear
 
-#cd ./se-test
-
 now="$(date +'%Y-%m-%d-%H-%M-%S')"
 reportsFolder=./../reports
 reportName=auto-test-$now
