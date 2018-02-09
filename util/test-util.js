@@ -75,12 +75,24 @@ function getEnvData() {
     const seServerPort = parseInt(process.env.SE_SERVER_PORT, 10); // eslint-disable-line no-process-env
 
     return {
-        seServerPort, // eslint-disable-line no-process-env
-        // browserName: process.env.BROWSER_NAME, // eslint-disable-line no-process-env
-        // osName: getOsName(),
         isMobile: Boolean(process.env.IS_MOBILE), // eslint-disable-line no-process-env
         wdServerUrl: 'http://localhost:' + seServerPort + '/wd/hub'
     };
 }
 
 module.exports.getEnvData = getEnvData;
+
+
+function getSeleniumServerArgs() {
+    const seServerPort = parseInt(process.env.SE_SERVER_PORT, 10); // eslint-disable-line no-process-env
+
+    return [
+        './driver/selenium-server-standalone-3.9.1.jar',
+        {
+            port: seServerPort,
+            jvmArgs: getJvmArgs()
+        }
+    ];
+}
+
+module.exports.getSeleniumServerArgs = getSeleniumServerArgs;

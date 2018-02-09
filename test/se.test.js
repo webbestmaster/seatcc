@@ -1,19 +1,14 @@
 /* global describe, it, before, after, beforeEach, afterEach, process */
 const {assert} = require('chai');
-const util = require('./../util/test-util');
-const seUtil = require('./../util/se-util');
-const mainData = require('./../main-data/data.json');
+const WebDriver = require('selenium-webdriver');
 const addContext = require('mochawesome/addContext');
 const {SeleniumServer} = require('selenium-webdriver/remote');
 
+const util = require('./../util/test-util');
+const seUtil = require('./../util/se-util');
+const mainData = require('./../main-data/data.json');
 const envData = util.getEnvData();
-
-const server = new SeleniumServer('./driver/selenium-server-standalone-3.6.0.jar', {
-    port: envData.seServerPort,
-    jvmArgs: util.getJvmArgs()
-});
-
-const WebDriver = require('selenium-webdriver');
+const server = new SeleniumServer(...util.getSeleniumServerArgs());
 const until = WebDriver.until;
 const byCss = WebDriver.By.css;
 let driver = null;
