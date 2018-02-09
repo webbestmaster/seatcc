@@ -8,26 +8,6 @@ const {SeleniumServer} = require('selenium-webdriver/remote');
 
 const envData = util.getEnvData();
 
-/*
-const webDriverData = {
-    jvmArgs: ['-Dwebdriver.chrome.driver=./driver/' + envData.osName + '/chromedriver'],
-    capabilities: {
-        browserName: 'chrome', chromeOptions: {args: ['--disable-extensions', '--disable-infobars']}
-    }
-};
-*/
-
-// const webDriverData = {
-//     jvmArgs: ['-Dwebdriver.gecko.driver=./driver/' + OS_NAME + '/geckodriver'],
-//     capabilities: {browserName: 'firefox'}
-// };
-
-// const webDriverData = {
-//     jvmArgs: ['-Dwebdriver.opera.driver=./driver/' + OS_NAME + '/operadriver'],
-//     capabilities: {browserName: 'opera', operaOptions: {binary: '/usr/bin/opera'}}
-// };
-
-// webdriver.enable.native.events=1
 const server = new SeleniumServer('./driver/selenium-server-standalone-3.6.0.jar', {
     port: envData.seServerPort,
     jvmArgs: util.getJvmArgs()

@@ -26,6 +26,9 @@ function getOsName() {
 
 module.exports.getOsName = getOsName;
 
+/*
+* To enable native events use webdriver.enable.native.events=1
+* */
 function getJvmArgs() {
     const browserName = process.env.BROWSER_NAME; // eslint-disable-line no-process-env
     const osName = getOsName();
