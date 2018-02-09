@@ -1,24 +1,82 @@
 /* global process */
-const fs = require('fs'); // eslint-disable-line id-length
 const dot = require('dot');
 
 const createTagGenerator = dot.template('<{{= it.tagName }} {{= it.attributes }}></{{= it.tagName }}>');
 
-const util = {
-    createTag: (tagName, attributes) => createTagGenerator({tagName, attributes}),
-    detectOsName: () => {
-        const platformName = process.platform;
+function createTag(tagName, attributes) {
+    return createTagGenerator({tagName, attributes});
+}
 
-        if (/darwin/.test(platformName)) {
-            return 'darwin';
-        }
+module.exports.createTag = createTag;
 
-        if (/linux/.test(platformName)) {
-            return 'linux';
-        }
 
-        throw new Error('Can NOT detect OS!');
+function getOsName() {
+    const platformName = process.platform;
+
+    if (/darwin/.test(platformName)) {
+        return 'darwin';
     }
-};
 
-module.exports = util;
+    if (/linux/.test(platformName)) {
+        return 'linux';
+    }
+
+    throw new Error('Can NOT detect OS!');
+}
+
+module.exports.getOsName = getOsName;
+
+function getJvmArgs() {
+    const browserName = process.env.BROWSER_NAME; // eslint-disable-line no-process-env
+    const osName = getOsName();
+
+    switch (browserName) {
+        case 'android':
+        case 'chrome':
+            return ['-Dwebdriver.chrome.driver=./driver/' + osName + '/chromedriver'];
+        case 'ff':
+            return ['-Dwebdriver.gecko.driver=./driver/' + osName + '/geckodriver'];
+        case 'opera':
+            return ['-Dwebdriver.opera.driver=./driver/' + osName + '/operadriver'];
+
+        default:
+            throw new Error('Not support browser with name: ' + browserName);
+    }
+}
+
+module.exports.getJvmArgs = getJvmArgs;
+
+
+function getCapabilities() {
+    const browserName = process.env.BROWSER_NAME; // eslint-disable-line no-process-env
+
+    switch (browserName) {
+        case 'android':
+        case 'chrome':
+            return {browserName: 'chrome', chromeOptions: {args: ['--disable-extensions', '--disable-infobars']}};
+        case 'ff':
+            return {browserName: 'firefox'};
+        case 'opera':
+            return {browserName: 'opera', operaOptions: {binary: '/usr/bin/opera'}};
+
+        default:
+            throw new Error('Not support browser with name: ' + browserName);
+    }
+}
+
+module.exports.getCapabilities = getCapabilities;
+
+
+function getEnvData() {
+    const seServerPort = parseInt(process.env.SE_SERVER_PORT, 10); // eslint-disable-line no-process-env
+
+    return {
+        seServerPort, // eslint-disable-line no-process-env
+        // browserName: process.env.BROWSER_NAME, // eslint-disable-line no-process-env
+        // osName: getOsName(),
+        isMobile: Boolean(process.env.IS_MOBILE), // eslint-disable-line no-process-env
+        wdServerUrl: 'http://localhost:' + seServerPort + '/wd/hub'
+    };
+}
+
+module.exports.getEnvData = getEnvData;

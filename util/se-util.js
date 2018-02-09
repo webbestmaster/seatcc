@@ -1,6 +1,6 @@
 const Canvas = require('canvas');
 const Image = Canvas.Image;
-const BASE64_IMAGE_PREFIX = 'data:image/png;base64,';
+const BASE64_IMAGE_PREFIX = 'data:image/png;base64,'; // eslint-disable-line id-match
 const WebDriver = require('selenium-webdriver');
 const byCss = WebDriver.By.css;
 
@@ -49,7 +49,7 @@ const screen = {
                     const ctx = canvas.getContext('2d');
                     const img = new Image();
 
-                    img.src = BASE64_IMAGE_PREFIX + image;
+                    img.src = BASE64_IMAGE_PREFIX + image; // eslint-disable-line id-match
 
                     ctx.drawImage(img, -deltaScrollLeft, -deltaScrollTop, img.width, img.height);
 

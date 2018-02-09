@@ -5,20 +5,17 @@ const seUtil = require('./../util/se-util');
 const mainData = require('./../main-data/data.json');
 const addContext = require('mochawesome/addContext');
 const {SeleniumServer} = require('selenium-webdriver/remote');
-const DESKTOP_SERVER_PORT = 4444;
 
-const SERVER_PORT = process.env.SERVER_PORT || DESKTOP_SERVER_PORT; // eslint-disable-line no-process-env
-const OS_NAME = util.detectOsName();
-const IS_MOBILE = SERVER_PORT !== DESKTOP_SERVER_PORT;
-const SITE_URL = mainData.url.host;
-const WEB_DRIVER_SERVER_URL = 'http://localhost:' + SERVER_PORT + '/wd/hub';
+const envData = util.getEnvData();
 
+/*
 const webDriverData = {
-    jvmArgs: ['-Dwebdriver.chrome.driver=./driver/' + OS_NAME + '/chromedriver'],
+    jvmArgs: ['-Dwebdriver.chrome.driver=./driver/' + envData.osName + '/chromedriver'],
     capabilities: {
         browserName: 'chrome', chromeOptions: {args: ['--disable-extensions', '--disable-infobars']}
     }
 };
+*/
 
 // const webDriverData = {
 //     jvmArgs: ['-Dwebdriver.gecko.driver=./driver/' + OS_NAME + '/geckodriver'],
@@ -32,8 +29,8 @@ const webDriverData = {
 
 // webdriver.enable.native.events=1
 const server = new SeleniumServer('./driver/selenium-server-standalone-3.6.0.jar', {
-    port: SERVER_PORT,
-    jvmArgs: webDriverData.jvmArgs
+    port: envData.seServerPort,
+    jvmArgs: util.getJvmArgs()
 });
 
 const WebDriver = require('selenium-webdriver');
@@ -42,7 +39,7 @@ const byCss = WebDriver.By.css;
 let driver = null;
 
 describe('Selenium test', () => {
-    if (!IS_MOBILE) {
+    if (!envData.isMobile) {
         before(() => server.start());
     }
 
@@ -51,11 +48,11 @@ describe('Selenium test', () => {
     beforeEach(() => {
         driver = new WebDriver
             .Builder()
-            .usingServer(WEB_DRIVER_SERVER_URL)
-            .withCapabilities(webDriverData.capabilities)
+            .usingServer(envData.wdServerUrl)
+            .withCapabilities(util.getCapabilities())
             .build();
 
-        if (!IS_MOBILE) {
+        if (!envData.isMobile) {
             seUtil.screen.setSize(driver, 1024, 768);
         }
     });
@@ -65,7 +62,7 @@ describe('Selenium test', () => {
     const now = Date.now();
 
     it('Register', function Register() {
-        driver.get(SITE_URL);
+        driver.get(mainData.url.host);
 
         driver
             .findElement(byCss('a[href="/authorization"]')).click();
@@ -91,8 +88,9 @@ describe('Selenium test', () => {
         return driver.sleep(1000);
     }).timeout(30e3);
 
+/*
     it('Login', function Login() {
-        driver.get(SITE_URL);
+        driver.get(mainData.url.host);
 
         driver
             .findElement(byCss('a[href="/authorization"]')).click();
@@ -108,4 +106,5 @@ describe('Selenium test', () => {
 
         return driver.sleep(1000);
     }).timeout(30e3);
+*/
 });
