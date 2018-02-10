@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
 clear
+browser=$1
+
+if [ -z "${browser}" ] ; then
+    echo "You should pass a parameter: browser"
+    exit 1
+fi
 
 now="$(date +'%Y-%m-%d-%H-%M-%S')"
-reportsFolder=./../reports
-reportName=auto-test-$now
+reportsFolder=./reports
+reportName=auto-test-$browser--$now
 
-mocha ./test/*.test.js --reporter mochawesome --reporter-options reportDir=$reportsFolder/auto-test-$now,reportFilename=$reportName,reportTitle="Auto Test $now",inlineAssets=false
+mocha ./test/*.test.js --reporter mochawesome --reporter-options reportDir=$reportsFolder/$reportName,reportFilename=$reportName,reportTitle="Auto Test $browser - $now",inlineAssets=false
 
 
 #unamestr=`uname`

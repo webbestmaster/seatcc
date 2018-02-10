@@ -6,7 +6,7 @@ browserServerPort=4444
 case $browser in
     chrome | opera | ff)
         echo $browser browser
-        BROWSER_NAME=$browser SE_SERVER_PORT=$browserServerPort IS_MOBILE="" ./run-pc-test.sh
+        BROWSER_NAME=$browser SE_SERVER_PORT=$browserServerPort IS_MOBILE="" ./run-pc-test.sh $browser
     ;;
 
     android)

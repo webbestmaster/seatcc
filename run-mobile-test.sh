@@ -12,9 +12,9 @@ fi
 
 now="$(date +'%Y-%m-%d-%H-%M-%S')"
 reportsFolder=./reports
-reportName=auto-test-$now-$deviceId
+reportName=auto-test-$deviceId--$now
 
-SE_SERVER_PORT=$serverPort mocha ./test/*.test.js --reporter mochawesome --reporter-options reportDir=$reportsFolder/auto-test-$now,reportFilename=$reportName,reportTitle="Auto Test $now",inlineAssets=false
+SE_SERVER_PORT=$serverPort mocha ./test/*.test.js --reporter mochawesome --reporter-options reportDir=$reportsFolder/$reportName,reportFilename=$reportName,reportTitle="Auto Test $deviceId - $now",inlineAssets=false
 
 #unamestr=`uname`
 #reportPath="$reportsFolder/$reportName.html"
