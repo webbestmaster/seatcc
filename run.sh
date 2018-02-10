@@ -4,18 +4,8 @@ browser=$1
 browserServerPort=4444
 
 case $browser in
-    chrome)
-        echo chrome browser
-        BROWSER_NAME=$browser SE_SERVER_PORT=$browserServerPort IS_MOBILE="" ./run-pc-test.sh
-    ;;
-
-    ff)
-        echo ff browser
-        BROWSER_NAME=$browser SE_SERVER_PORT=$browserServerPort IS_MOBILE="" ./run-pc-test.sh
-    ;;
-
-    opera)
-        echo opera browser
+    chrome | opera | ff)
+        echo $browser browser
         BROWSER_NAME=$browser SE_SERVER_PORT=$browserServerPort IS_MOBILE="" ./run-pc-test.sh
     ;;
 
