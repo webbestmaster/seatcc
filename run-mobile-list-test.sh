@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
 
+phoneListFileName=./phone-list.txt
+deviceIds=""
+
+while read -r line
+do
+    if [[ -n $line && "$line" != "#"* ]]; then
+        deviceIds+=$line" "
+    fi
+done < $phoneListFileName
+
 pathToAdb="~/Android/Sdk/platform-tools/adb"
 
 echo "Unbind all devices"
 
 ( exec "${pathToAdb}" forward --remove-all )
 
-#deviceIds=(emulator-5558 emulator-5556)
-#deviceIds=(A3P4376F48D9)
-deviceIds=(emulator-5554)
+deviceIds=($deviceIds)
 startPortNumber=8000
 
 for deviceId in "${deviceIds[@]}";
