@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <style>
+        #tag:active, #tag:hover {
+            background-color: #c00;
+        }
+    </style>
+
+</head>
+<body>
+
+<h2>https://www.npmjs.com/package/static-server</h2>
+<h2>npm -g install static-server</h2>
+
+<pre>
+#no-exist - is not for until.elementLocated
+//---- #tag ----\\
+#tag - is good for until.elementLocated
+#tag - is good for until.elementIsVisible
+#tag - is true for elem.isDisplayed()
+//---- #none ----\\
+#none - is good for until.elementLocated
+#none - is not for until.elementIsVisible
+can not click, too far
+#none - is false for elem.isDisplayed()
+//---- #zero ----\\
+#zero - is good for until.elementLocated
+#zero - is not for until.elementIsVisible
+#zero - is false for elem.isDisplayed()
+//---- #far ----\\
+#far - is good for until.elementLocated
+#far - is not for until.elementIsVisible
+#far - is false for elem.isDisplayed()
+</pre>
+
+<div id="none" style="display: none">I am display: none</div>
+<div id="zero" style="width: 0; height: 0; overflow: hidden;">zero dimensions</div>
+<div id="far" style="position: absolute;left: -10000px; top: -10000px;">not in view</div>
+
+<div style="height: 9000px">
+    <h1>BIG DIV</h1>
+</div>
+<div id="tag">I am simple tag</div>
+
+</body>
+</html>
