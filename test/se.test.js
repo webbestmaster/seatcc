@@ -1,4 +1,8 @@
 /* global describe, it, before, after, beforeEach, afterEach, process */
+
+// used for debug only
+// require('dotenv').config();
+
 const {assert} = require('chai');
 const WebDriver = require('selenium-webdriver');
 const addContext = require('mochawesome/addContext');
@@ -36,50 +40,54 @@ describe('Selenium test', () => {
 
     const now = Date.now();
 
-    it('Register', function Register() {
-        driver.get(mainData.url.host);
+    it('Register', async function Register() {
+        await driver.get(mainData.url.host);
 
-        driver
+        await driver
             .findElement(byCss('a[href="/authorization"]')).click();
 
-        driver.findElement(byCss('input[name="email"]')).sendKeys('test-user-' + now + '@gmail.com');
-        // driver.findElement(byCss('input[name="password"]')).sendKeys('123456');
+        await driver.findElement(byCss('input[name="email"]')).sendKeys('test-user-' + now + '@gmail.com');
+        // await driver.findElement(byCss('input[name="password"]')).sendKeys('123456');
 
-        driver.findElement(byCss('.js-register')).click();
+        await driver.findElement(byCss('.js-register')).click();
 
-        driver.wait(until.elementLocated(byCss('a[href="/api/logout"]')), 5e3)
-            .then(elem => elem.isDisplayed())
-            .then(isDisplayed => assert(isDisplayed, 'Element is NOT displayed'));
+        const elem = await driver.wait(until.elementLocated(byCss('a[href="/api/logout"]')), 5e3);
+        const isDisplayed = await elem.isDisplayed();
 
-        seUtil.screen
-            .ofSelector(driver, '.header')
-            .then(image =>
-                addContext(this, {
-                    title: 'Header',
-                    value: util.createTag('img', 'src="' + image + '"')
-                })
-            );
+        assert(isDisplayed, 'Element is NOT displayed');
 
-        return driver.sleep(1000);
+        const image = await seUtil.screen
+            .ofSelector(driver, '.header');
+
+        addContext(this, image);
+
+        /*
+            addContext(this, {
+                title: 'Header',
+                value: util.createTag('img', 'src="' + image + '"')
+            });
+        */
+
+        await driver.sleep(1000);
     }).timeout(30e3);
 
-/*
-    it('Login', function Login() {
-        driver.get(mainData.url.host);
+    /*
+        it('Login', function Login() {
+            driver.get(mainData.url.host);
 
-        driver
-            .findElement(byCss('a[href="/authorization"]')).click();
+            driver
+                .findElement(byCss('a[href="/authorization"]')).click();
 
-        driver.findElement(byCss('input[name="email"]')).sendKeys('test-user-' + now + '@gmail.com');
-        driver.findElement(byCss('input[name="password"]')).sendKeys('123456');
+            driver.findElement(byCss('input[name="email"]')).sendKeys('test-user-' + now + '@gmail.com');
+            driver.findElement(byCss('input[name="password"]')).sendKeys('123456');
 
-        driver.findElement(byCss('.js-login')).click();
+            driver.findElement(byCss('.js-login')).click();
 
-        driver.wait(until.elementLocated(byCss('a[href="/api/logout"]')), 5e3)
-            .then(elem => elem.isDisplayed())
-            .then(isDisplayed => assert(isDisplayed, 'Element is NOT displayed'));
+            driver.wait(until.elementLocated(byCss('a[href="/api/logout"]')), 5e3)
+                .then(elem => elem.isDisplayed())
+                .then(isDisplayed => assert(isDisplayed, 'Element is NOT displayed'));
 
-        return driver.sleep(1000);
-    }).timeout(30e3);
-*/
+            return driver.sleep(1000);
+        }).timeout(30e3);
+    */
 });
